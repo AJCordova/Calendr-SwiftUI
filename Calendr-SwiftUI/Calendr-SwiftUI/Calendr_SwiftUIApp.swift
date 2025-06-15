@@ -11,7 +11,7 @@ import SwiftUI
 struct Calendr_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DashboardView()
         }
     }
 }
