@@ -10,29 +10,40 @@ import SwiftUI
 struct DashboardView: View {
     
     @State private var selectedDate: Date = Date()
+    @State private var dataSource: [TableData] = [
+        TableData(value: "Lets try and make this 1 long"),
+        TableData(value: "Event 1"),
+        TableData(value: "Event 1"),
+    ]
+    @State private var selectedRow: TableData?
     
     var body: some View {
         VStack(alignment: .leading) {
             
             Text("Your Events")
-                .padding()
-                .border(.red)
+                .padding(.leading)
                 .bold()
             
-            DatePicker("", selection: $selectedDate,
-                       displayedComponents: .date)
+            DatePicker("", selection: $selectedDate, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .border(.red)
+                .padding()
             
-            Spacer().border(.red)
+            Spacer()
             
-            // Table
-            Rectangle()
-                .frame(width: .infinity, height: .infinity)
-                .foregroundStyle(Color.teal)
-                .border(.red)
-            // replace with List
+            Text("Events")
+                .bold()
+                .padding(.leading)
             
+            Table(dataSource) {
+                TableColumn("Column Name") { value in
+                    Text("\(value.value)")
+                }
+                TableColumn("Column Name 2") { value in
+                    Text("\(value.id.uuidString)")
+                }
+            }
+            .border(.red)
             
             Spacer()
             
@@ -43,10 +54,14 @@ struct DashboardView: View {
             }.frame(maxWidth: .infinity, alignment: .center)
             
         }
-        .padding()
     }
 }
 
 #Preview {
     DashboardView()
+}
+
+struct TableData: Identifiable, Hashable {
+    let id = UUID()
+    let value: String
 }
