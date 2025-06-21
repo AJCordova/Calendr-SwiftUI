@@ -11,10 +11,11 @@ struct DashboardView: View {
     
     @State private var selectedDate: Date = Date()
     @State private var dataSource: [TableData] = [
-        TableData(value: "Lets try and make this 1 long"),
-        TableData(value: "Event 1"),
-        TableData(value: "Event 1"),
+        TableData(id: "0", value: "Lets try and make this 1 long"),
+        TableData(id: "1", value: "Event 1"),
+        TableData(id: "2", value: "Event 1"),
     ]
+    
     @State private var selectedRow: TableData?
     
     var body: some View {
@@ -24,10 +25,14 @@ struct DashboardView: View {
                 .padding(.leading)
                 .bold()
             
-            DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                .datePickerStyle(.graphical)
+            DatePicker("", selection: $selectedDate, displayedComponents: .date).onSubmit {
+                print("\(selectedDate.description(with: .current))")
+            }.datePickerStyle(.graphical)
                 .border(.red)
-                .padding()
+            
+//            DatePicker("", selection: $selectedDate, displayedComponents: .date)
+//                .datePickerStyle(.graphical)
+//                .border(.red)
             
             Spacer()
             
@@ -36,12 +41,7 @@ struct DashboardView: View {
                 .padding(.leading)
             
             Table(dataSource) {
-                TableColumn("Column Name") { value in
-                    Text("\(value.value)")
-                }
-                TableColumn("Column Name 2") { value in
-                    Text("\(value.id.uuidString)")
-                }
+                TableColumn("ID Column", value: \.id)
             }
             .border(.red)
             
@@ -62,6 +62,6 @@ struct DashboardView: View {
 }
 
 struct TableData: Identifiable, Hashable {
-    let id = UUID()
+    let id: String
     let value: String
 }
