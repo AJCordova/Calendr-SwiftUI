@@ -30,16 +30,13 @@ struct DashboardView: View {
             }.datePickerStyle(.graphical)
                 .border(.red)
             
-//            DatePicker("", selection: $selectedDate, displayedComponents: .date)
-//                .datePickerStyle(.graphical)
-//                .border(.red)
-            
             Spacer()
             
             Text("Events")
                 .bold()
                 .padding(.leading)
             
+            // Remove
             Table(dataSource) {
                 TableColumn("ID Column", value: \.id)
             }
