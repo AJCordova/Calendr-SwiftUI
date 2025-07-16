@@ -10,13 +10,7 @@ import SwiftUI
 struct DashboardView: View {
     
     @State private var selectedDate: Date = Date()
-    @State private var dataSource: [TableData] = [
-        TableData(id: "0", value: "Lets try and make this 1 long"),
-        TableData(id: "1", value: "Event 1"),
-        TableData(id: "2", value: "Event 1"),
-    ]
-    
-    @State private var selectedRow: TableData?
+    @State private var dataSource: [Date] = []
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,22 +19,23 @@ struct DashboardView: View {
                 .padding(.leading)
                 .bold()
             
-            DatePicker("", selection: $selectedDate, displayedComponents: .date).onSubmit {
-                print("\(selectedDate.description(with: .current))")
-            }.datePickerStyle(.graphical)
-                .border(.red)
+            DatePicker(
+                        "",
+                       selection: $selectedDate,
+                       displayedComponents: .date
+            ).datePickerStyle(.graphical)
+                
             
             Spacer()
             
-            Text("Events")
-                .bold()
-                .padding(.leading)
-            
-            // Remove
-            Table(dataSource) {
-                TableColumn("ID Column", value: \.id)
+            Text("Selected: \(selectedDate.description)")
+                .padding()
+            if dataSource.isEmpty {
+                Text("Place table of dates here or an alternate view if data source is empty")
+                    .padding()
+            } else {
+                // Show a list here
             }
-            .border(.red)
             
             Spacer()
             
@@ -49,16 +44,10 @@ struct DashboardView: View {
                     Text("Add Event")
                 }).buttonStyle(.borderedProminent)
             }.frame(maxWidth: .infinity, alignment: .center)
-            
         }
     }
 }
 
 #Preview {
     DashboardView()
-}
-
-struct TableData: Identifiable, Hashable {
-    let id: String
-    let value: String
 }
